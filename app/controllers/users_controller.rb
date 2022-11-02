@@ -14,13 +14,21 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @user = User.find(params[:id])
+    if @user.id != current_user.id
+      redirect_to user_path(current_user.id)
+    end
   end
 
   def update
+    # @user定義なし
+    @user = User.find(params[:id])
     if @user.update(user_params)
-      redirect_to users_path(@user), notice: "You have updated user successfully."
+      flash[:notice] = "You have updated user successfully."
+      redirect_to users_path(@user.id)
     else
-      render "show"
+      # render "show" ←書き方がおかしいeditに戻すんだっけ？
+      render :show
     end
   end
 
@@ -36,5 +44,5 @@ class UsersController < ApplicationController
       redirect_to user_path(current_user)
     end
   end
-  
+
 end
