@@ -5,6 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
 # belongs_toでなくhas many
+# hasumany時は複数形、注意！
+  has_many :favorites, dependent: :destroy
   has_many :books, dependent: :destroy
   
   has_one_attached :profile_image
