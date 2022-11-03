@@ -7,9 +7,9 @@
       <%= render 'form', book: Book.new %>
     </div>
     <div class='col-md-8 offset-md-1'>
-  		<h2>Book detail</h2>
-  		<table class='table'>
-  		  <tr>
+      <h2>Book detail</h2>
+      <table class='table'>
+        <tr>
           <td><%= link_to(@book.user) do %>
             <%= image_tag @book.user.get_profile_image, size:"100x100" %><br>
             <%= @book.user.name %>
@@ -30,11 +30,42 @@
               <% end %>
             <% end %>
           </td>
-          
+          <td>コメント数：<%= @book.book_comments.count %></td>
           <% if @book.user.id == current_user.id %>
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
             <td><%= link_to 'Destroy', book_path, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
           <% end %>
+        </tr>
+
+        <% @book.book_comments.each do |book_comment| %>
+          <tr>
+              <!--これだとpost指定でコメントが保存できる。但しコメント保存後sizeの部分がgiven2でerrorを起こす-->
+              <!--< %= image_tag book_comment.user.profile_image(50,50)%><br>-->
+            <td><%= link_to(book_comment.user) do %>
+              <%= image_tag book_comment.user.get_profile_image, size:"50x50" %><br>
+              <%= book_comment.user.name %>
+              <% end %>
+            </td>
+
+            <td><%= book_comment.comment %></td>
+            <% if book_comment.user.id == current_user.id %>
+              <td><%= link_to 'Destroy', book_book_comment_path(book_comment.book,book_comment), method: :delete, class: "btn btn-sm btn-danger"%></td>
+            <% end %>
+          </tr>
+        <% end %>
+
+
+        <tr>
+          <!--メソッド指定なしだとgetになって遅れていなかった。-->
+          <!--が、get_prolire_imageのエラーを修正後postだと送れなくなる。なぜ？？-->
+          <!--< %= form_with model:[@book, @book_comment],method: :post do |f| %>-->
+          <%= form_with model:[@book, @book_comment] do |f| %>
+            <td>
+              <%= f.text_area :comment %><br>
+              <%= f.submit "送信" %>
+            </td>
+          <% end %>
+
         </tr>
       </table>
     </div>

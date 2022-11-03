@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   # booksにいいねをつける。つまりbooksの下にfavoriteがつく do,end追加
   # 作成、削除のみなのでonly:[:create,:destroy]作成
   resources :books, only: [:index,:show,:edit,:create,:destroy,:update]do
+    # ネストする
+    resources :book_comments, only: [:create,:destroy]
     # resourceはそれ自身のidがわからなくても、関連する他のモデルのidから特定できる場合に使用
     # 今回は一人一回であるためuser_idとbook_idから指定できる
     resource :favorites, only: [:create, :destroy]
