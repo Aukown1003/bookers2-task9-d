@@ -10,6 +10,8 @@ class BooksController < ApplicationController
     @books = Book.all
     # @bookようにインスタンス作成
     @book = Book.new
+    # いいね用の空のインスタンス作成
+    @post_favorite = Postfavorite.new
   end
 
   def create
