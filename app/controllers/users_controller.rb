@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
+
+  # 現在のuser_idと投稿者のidが一致していないとはじく
   before_action :ensure_correct_user, only: [:update]
 
   def show
@@ -25,10 +28,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:notice] = "You have updated user successfully."
-      redirect_to users_path(@user.id)
+      redirect_to user_path(@user.id)
     else
-      # render "show" ←書き方がおかしいeditに戻すんだっけ？
-      render :show
+      # render editに戻す
+      render :edit
     end
   end
 
