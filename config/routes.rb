@@ -9,8 +9,8 @@ Rails.application.routes.draw do
   # 作成、削除のみなのでonly:[:create,:destroy]作成
   resources :books, only: [:index,:show,:edit,:create,:destroy,:update]do
     # resourceはそれ自身のidがわからなくても、関連する他のモデルのidから特定できる場合に使用
-    今回は一人一回であるためuser_idとbook_idから指定できる
-    resource :favorites, only:[:create,:destroy]
+    # 今回は一人一回であるためuser_idとbook_idから指定できる
+    resource :favorites, only: [:create, :destroy]
   end
   resources :users, only: [:index,:show,:edit,:update]
 
