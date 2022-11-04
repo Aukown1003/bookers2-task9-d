@@ -1,0 +1,13 @@
+   <!--いいね機能部分テンプレート-->
+   <!--faivorited_byはbook_modelで指定している-->
+  <% if book.favorited_by(current_user) %>
+    <!--つまりBook.find(params[:book_id])に user.id = current_user.idが存在しているか？-->
+    <!--< %= if Book.find(params[:book_id]).favorites.exists?(bookカラム[user_id]: user.id) %>-->
+    <%= link_to book_favorites_path(book), method: :delete do %>
+      ♥<%= book.favorites.count %>
+    <% end %>
+  <% else %>
+    <%= link_to book_favorites_path(book), method: :post do %>
+      ♡<%= book.favorites.count %>
+    <% end %>
+  <% end %>

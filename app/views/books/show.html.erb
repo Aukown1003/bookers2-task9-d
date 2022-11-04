@@ -18,17 +18,7 @@
           <td><%= link_to @book.title, @book %></td>
           <td><%= @book.body %></td>
           <td>
-            <% if @book.favorited_by(current_user) %>
-              <!--つまりBook.find(params[:book_id])に user.id = current_user.idが存在しているか？-->
-              <!--< %= if Book.find(params[:book_id]).favorites.exists?(bookカラム[user_id]: user.id) %>-->
-              <%= link_to book_favorites_path(@book), method: :delete do %>
-                ♥<%= @book.favorites.count %>
-              <% end %>
-            <% else %>
-              <%= link_to book_favorites_path(@book), method: :post do %>
-                ♡<%= @book.favorites.count %>
-              <% end %>
-            <% end %>
+            <%= render 'nice', book: @book %>
           </td>
           <td>コメント数：<%= @book.book_comments.count %></td>
           <% if @book.user.id == current_user.id %>
@@ -36,12 +26,13 @@
             <td><%= link_to 'Destroy', book_path, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
           <% end %>
         </tr>
-
+      </table>
+      <table class ="table table-borderless m-0">
         <% @book.book_comments.each do |book_comment| %>
           <tr>
               <!--これだとpost指定でコメントが保存できる。但しコメント保存後sizeの部分がgiven2でerrorを起こす-->
               <!--< %= image_tag book_comment.user.profile_image(50,50)%><br>-->
-            <td><%= link_to(book_comment.user) do %>
+            <td style= "width:10%"><%= link_to(book_comment.user) do %>
               <%= image_tag book_comment.user.get_profile_image, size:"50x50" %><br>
               <%= book_comment.user.name %>
               <% end %>
@@ -53,19 +44,19 @@
             <% end %>
           </tr>
         <% end %>
-
-
+      </table>
+      <table class = "table table-borderless">
         <tr>
           <!--メソッド指定なしだとgetになって遅れていなかった。-->
           <!--が、get_prolire_imageのエラーを修正後postだと送れなくなる。なぜ？？-->
           <!--< %= form_with model:[@book, @book_comment],method: :post do |f| %>-->
           <%= form_with model:[@book, @book_comment] do |f| %>
             <td>
-              <%= f.text_area :comment %><br>
+              <%= f.text_area :comment , class: 'form-control book_comment'%><br>
               <%= f.submit "送信" %>
             </td>
           <% end %>
-
+          
         </tr>
       </table>
     </div>
