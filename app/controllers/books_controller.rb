@@ -2,6 +2,7 @@ class BooksController < ApplicationController
   before_action :authenticate_user!
 
   def show
+    @book_new = Book.new
     @book = Book.find(params[:id])
     @user = @book.user
     @book_comment = BookComment.new
@@ -9,7 +10,7 @@ class BooksController < ApplicationController
 
   def index
     @books = Book.all
-    # @bookようにインスタンス作成
+    # @bookにインスタンス作成
     @book = Book.new
   end
 
