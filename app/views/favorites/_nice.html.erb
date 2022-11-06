@@ -4,10 +4,13 @@
     <!--つまりBook.find(params[:book_id])に user.id = current_user.idが存在しているか？-->
     <!--< %= if Book.find(params[:book_id]).favorites.exists?(bookカラム[user_id]: user.id) %>-->
     <%= link_to book_favorites_path(book), method: :delete do %>
-      ♥<%= book.favorites.count %>
+    <!--ハートのfontawesomeを使用-->
+      <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
+      <%= book.favorites.count %>
     <% end %>
   <% else %>
     <%= link_to book_favorites_path(book), method: :post do %>
-      ♡<%= book.favorites.count %>
+      <i class="fas fa-heart" aria-hidden="true"></i>
+      <%= book.favorites.count %>
     <% end %>
   <% end %>
