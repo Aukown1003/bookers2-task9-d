@@ -15,7 +15,7 @@ class User < ApplicationRecord
   has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id",dependent: :destroy
   # followingメソッドを生成する active_relationships userクラスのインスタンスにactive_relationshipsを実行し
   # followedメソッドを実行する。その結果をfollowingメソッドに入れる
-  # 見たいのはuserのフォローしているuserの集合 ↓ 
+  # 見たいのはuserのフォローしているuserの集合 ↓
   # active_relationships 自分のフォローしているuserのidを取得
   # followed idを参照してそれぞれのuserの情報を持ってくる
   # @user.active_relationships.map($:followed)である
@@ -23,16 +23,16 @@ class User < ApplicationRecord
   has_many :following, through: :active_relationships,  source: :followed
   # フォロワー一個ずつfollowerをかける
   has_many :followers, through: :passive_relationships, source: :follower
-  
+
   has_one_attached :profile_image
 
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
-  
+
   def get_profile_image
     (profile_image.attached?) ? profile_image : 'no_image.jpg'
   end
-  
+
   # ユーザーをフォローする
   def follow(other_user)
     following << other_user
@@ -47,5 +47,7 @@ class User < ApplicationRecord
   def following?(other_user)
     following.include?(other_user)
   end
+
   
+
 end
