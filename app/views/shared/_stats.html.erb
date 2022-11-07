@@ -1,0 +1,17 @@
+
+  <tr>
+    <th>follwes</th>
+    <th>
+      <a href="<%= following_user_path(user) %>">
+        <%= user.following.count %>
+      </a>
+    </th>
+  </tr>
+  <tr>
+    <th>followers</th>
+    <th>
+      <a href="<%= followers_user_path(user) %>">
+        <%= user.followers.count %>
+      </a>
+    </th>
+  </tr>
