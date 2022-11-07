@@ -1,7 +1,6 @@
 class Relationship < ApplicationRecord
-  # class_name: "User"でUserモデルを参照
-  # belongs_to :userとするとどっちがどっちのuserかわからなくなる
-  # followerテーブルを探しに行ってしまうので、class_name: "User"でuserテーブルからデータをとってきてもらう
   belongs_to :follower, class_name: "User"
   belongs_to :followed, class_name: "User"
+  # 規約  ☓ モデル名_id   => Follower_id <-> Follower
+  # 規約　○ Follwer_id <-> User
 end

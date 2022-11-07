@@ -4,41 +4,44 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-# belongs_toでなくhas many
-# hasumany時は複数形、注意！
+ # belongs_toでなくhas many
+ # hasumany時は複数形、注意！
+  # default:class_name:"favorite" forein_key: "User.id"
   has_many :favorites, dependent: :destroy
   has_many :book_comments, dependent: :destroy
   has_many :books, dependent: :destroy
-  #ここまでは一緒、class_name:でRelationshipテーブルを指定
-  # foreign_key(外侮キー)で参照するカラムを指定
-  has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
-  has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
-  
-  # フォロー・フォロワーの一覧画面で、user.followersという記述でフォロワーを表示したい
-  # throughでスルーするテーブル、sourceで参照するカラムを指定
-  has_many :followings, through: :relationships, source: :followed
-  has_many :followers, through: :reverse_of_relationships, source: :follower
+  # "#{Model names}s"を探しに行く。class_nameはRelationshipとする。規約から外れるから指定
+  has_many :active_relationships,  class_name: "Relationship", foreign_key: "follwer_id", dependent: :destroy
+  has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id",dependent: :destroy
+  # followingメソッドを生成する active_relationships userクラスのインスタンスにactive_relationshipsを実行し
+  # followedメソッドを実行する。その結果をfollowingメソッドに入れる
+  # 見たいのはuserのフォローしているuserの集合 ↓ 
+  # active_relationships 自分のフォローしているuserのidを取得
+  # followed idを参照してそれぞれのuserの情報を持ってくる
+  # @user.active_relationships.map($:followed)である
+  # フォロー一個ずつfollowedをかける
+  has_many :following, through: :active_relationships,  source: :followed
+  # フォロワー一個ずつfollowerをかける
+  has_many :followers, through: :passive_relationships, source: :follower
   
   has_one_attached :profile_image
 
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
   
-  # フォローしたときの処理
-  def follow(user_id)
-    relationships.create(followed_id: user_id)
-  end
-  # フォローを外すときの処理
-  def unfollow(user_id)
-    relationships.find_by(followed_id: user_id).destroy
-  end
-  # フォローしているか判定
-  def following?(user)
-    followings.include?(user)
+  # ユーザーをフォローする
+  def follow(other_user)
+    following << other_user
   end
 
-  
-  def get_profile_image
-    (profile_image.attached?) ? profile_image : 'no_image.jpg'
+  # ユーザーをフォロー解除する
+  def unfollow(other_user)
+    active_relationships.find_by(followed_id: other_user.id).destroy
   end
+
+  # 現在のユーザーがフォローしてたらtrueを返す
+  def following?(other_user)
+    following.include?(other_user)
+  end
+  
 end
