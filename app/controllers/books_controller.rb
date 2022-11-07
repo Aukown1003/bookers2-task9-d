@@ -2,9 +2,8 @@ class BooksController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    @book_new = Book.new
     @book = Book.find(params[:id])
-    @user = @book.user
+    # @user = @book.user ←不要　何故か？showの部分テンプレートで@user = @book.userにして渡せばいい
     @book_comment = BookComment.new
   end
 
