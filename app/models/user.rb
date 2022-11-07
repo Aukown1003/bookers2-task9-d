@@ -11,7 +11,7 @@ class User < ApplicationRecord
   has_many :book_comments, dependent: :destroy
   has_many :books, dependent: :destroy
   # "#{Model names}s"を探しに行く。class_nameはRelationshipとする。規約から外れるから指定
-  has_many :active_relationships,  class_name: "Relationship", foreign_key: "follwer_id", dependent: :destroy
+  has_many :active_relationships,  class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id",dependent: :destroy
   # followingメソッドを生成する active_relationships userクラスのインスタンスにactive_relationshipsを実行し
   # followedメソッドを実行する。その結果をfollowingメソッドに入れる
