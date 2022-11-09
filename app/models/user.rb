@@ -4,24 +4,24 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
- # belongs_toでなくhas many
- # hasumany時は複数形、注意！
+  # belongs_toでなくhas many
+  # hasumany時は複数形、注意！
   # default:class_name:"favorite" forein_key: "User.id"
   has_many :favorites, dependent: :destroy
   has_many :book_comments, dependent: :destroy
   has_many :books, dependent: :destroy
-  # "#{Model names}s"を探しに行く。class_nameはRelationshipとする。規約から外れるから指定
+ 
+  # @user.active_relationshipsでユーザーのフォローしている(followed)人を呼び出す
+  # Relationshipに格納されているfollwer_idとfollowed_idを呼び出す
   has_many :active_relationships,  class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id",dependent: :destroy
-  # followingメソッドを生成する active_relationships userクラスのインスタンスにactive_relationshipsを実行し
-  # followedメソッドを実行する。その結果をfollowingメソッドに入れる
-  # 見たいのはuserのフォローしているuserの集合 ↓
-  # active_relationships 自分のフォローしているuserのidを取得
-  # followed idを参照してそれぞれのuserの情報を持ってくる
-  # @user.active_relationships.map($:followed)である
-  # フォロー一個ずつfollowedをかける
+  
+  # 見たいのはuserのフォローしているuser達の情報 ↓
+  # active_relationshipsで、follower_idを指定して、Relationshipを取得(follwer_id=1)
+  # followingsで持ってきたRelationshipに対してfollowedを実行
+  # followedはfollowed_id = user_idなのでフォローされているユーザーの情報を呼び出す
+  
   has_many :followings, through: :active_relationships,  source: :followed
-  # フォロワー一個ずつfollowerをかける
   has_many :followers, through: :passive_relationships, source: :follower
 
   has_one_attached :profile_image
@@ -45,7 +45,7 @@ class User < ApplicationRecord
   end
   # フォロー確認をおこなう
   def following?(user)
-   following.include?(user)
+   followings.include?(user)
   end
 
   
