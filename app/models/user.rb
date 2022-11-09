@@ -20,7 +20,7 @@ class User < ApplicationRecord
   # followed idを参照してそれぞれのuserの情報を持ってくる
   # @user.active_relationships.map($:followed)である
   # フォロー一個ずつfollowedをかける
-  has_many :following, through: :active_relationships,  source: :followed
+  has_many :followings, through: :active_relationships,  source: :followed
   # フォロワー一個ずつfollowerをかける
   has_many :followers, through: :passive_relationships, source: :follower
 
@@ -33,19 +33,19 @@ class User < ApplicationRecord
     (profile_image.attached?) ? profile_image : 'no_image.jpg'
   end
 
-  # ユーザーをフォローする
-  def follow(other_user)
-    following << other_user
+  # フォローする
+  def follow(user_id)
+    unless self == user_id
+     self.active_relationships.find_or_create_by(followed_id: user_id.to_i, follower_id: self.id)
+    end
   end
-
-  # ユーザーをフォロー解除する
-  def unfollow(other_user)
-    active_relationships.find_by(followed_id: other_user.id).destroy
+  # ユーザーのフォローを外す
+  def unfollow(user_id)
+   active_relationships.find_by(followed_id: user_id).destroy
   end
-
-  # 現在のユーザーがフォローしてたらtrueを返す
-  def following?(other_user)
-    following.include?(other_user)
+  # フォロー確認をおこなう
+  def following?(user)
+   following.include?(user)
   end
 
   

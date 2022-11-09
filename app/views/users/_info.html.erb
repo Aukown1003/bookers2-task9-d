@@ -8,7 +8,7 @@
 	  <th>introduction</th>
 	  <th><%= user.introduction %></th>
   </tr>
-  <%= render 'shared/stats' %>
+  <%= render 'shared/stats', user: @user%>
 </table>
 
 <div class='row'>

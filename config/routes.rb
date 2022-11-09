@@ -15,13 +15,16 @@ Rails.application.routes.draw do
     resource :favorites, only: [:create, :destroy]
   end
   resources :users, only: [:index,:show,:edit,:update] do
-    member do
-      get :following, :followers
-      # GET /users/id/following
-      # GET /users/id/followers
-    end
+    resources :relationships, only: [:create, :destroy]
+    get 'relationships/followers' => 'relationships#followers', as: 'followers'
+    get 'relationships/followings' => 'relationships#followings', as: 'followings'
+    # member do
+    #   get :followings, :followers
+    #   # GET /users/id/following
+    #   # GET /users/id/followers
+    # end
   end
-  resources :relationships, only: [:create, :destroy]
+  
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 # endなし！
 end

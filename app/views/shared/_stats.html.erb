@@ -2,16 +2,15 @@
   <tr>
     <th>follwes</th>
     <th>
-      <a href="<%= following_user_path(@user) %>">
-        <%= @user.following.count %>
-      </a>
+      <%= link_to user.followings.count, user_followings_path(user.id) %>
+        <!--< %= user.followings.count %>-->
     </th>
   </tr>
   <tr>
     <th>followers</th>
     <th>
-      <a href="<%= followers_user_path(@user) %>">
-        <%= @user.followers.count %>
+      <%= link_to user.followers.count, user_followers_path(user.id) %>
+        <!--< %= user.followers.count %>-->
       </a>
     </th>
   </tr>
