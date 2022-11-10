@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   root to: "homes#top"
   get "home/about"=>"homes#about"
-  get "serch" => "serches#serch"
+  get "search" => "serches#serch"
 
   devise_for :users
   # booksにいいねをつける。つまりbooksの下にfavoriteがつく do,end追加
@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     #   # GET /users/id/followers
     # end
   end
-  
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 # endなし！
 end
