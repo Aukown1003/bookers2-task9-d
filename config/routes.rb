@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     # 今回は一人一回であるためuser_idとbook_idから指定できる
     resource :favorites, only: [:create, :destroy]
   end
+  
   resources :users, only: [:index,:show,:edit,:update] do
     resources :relationships, only: [:create, :destroy]
     get 'relationships/followers' => 'relationships#followers', as: 'followers'
