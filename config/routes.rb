@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   root to: "homes#top"
   get "home/about"=>"homes#about"
+  get "serch" => "serches#serch"
 
   devise_for :users
   # booksにいいねをつける。つまりbooksの下にfavoriteがつく do,end追加
