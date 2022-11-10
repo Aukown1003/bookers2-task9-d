@@ -48,6 +48,6 @@ class User < ApplicationRecord
    followings.include?(user)
   end
 
-  
+  # 検索メソッド
 
 end
