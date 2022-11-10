@@ -5,29 +5,15 @@ class SearchesController < ApplicationController
   def search
     @model = params[:model]
     @word = params[:word]
+    @search =params[:search]
     # pry-rails
     
     if @model == "User"
-      @users = User.search_for(params[:search],params[:word])
-      # pry-rails
-      render "/searches/result"
+      @users = User.search_for(@search,@word)
     else
-      @books = Book.search_for(params[:search],params[:word])
-      # pry-rails
-      render "/searches/result"
+      @books = Book.search_for(@search,@word)
     end
+    render "/searches/result"
   end
-  
-  # def search
-  #   @model = params[:model]
-  #   @search = params[:search]
-  #   @word = params[:word]
-  #   if @model == "User"
-  #     @users = User.search_for(@search,@word)
-  #   else
-  #     @books = Book.search_for(@search,@word)
-  #   end
-    # redirect_to search_result_path
-  # end
   
 end

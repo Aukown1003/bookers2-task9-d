@@ -12,7 +12,11 @@
     <%= render 'layouts/header' %>
       <main>
         <p id="notice"><%= notice %></p>
-        <%= render 'layouts/search' %>
+        <% unless current_page?(root_path) %>
+        <div class ="container text-center">
+           <%= render 'layouts/search' %>
+        </div>
+        <% end %>
         <%= yield %>
       </main>
     <%= render 'layouts/footer' %>
