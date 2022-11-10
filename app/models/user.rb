@@ -10,17 +10,17 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :book_comments, dependent: :destroy
   has_many :books, dependent: :destroy
- 
+
   # @user.active_relationshipsでユーザーのフォローしている(followed)人を呼び出す
   # Relationshipに格納されているfollwer_idとfollowed_idを呼び出す
   has_many :active_relationships,  class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id",dependent: :destroy
-  
+
   # 見たいのはuserのフォローしているuser達の情報 ↓
   # active_relationshipsで、follower_idを指定して、Relationshipを取得(follwer_id=1)
   # followingsで持ってきたRelationshipに対してfollowedを実行
   # followedはfollowed_id = user_idなのでフォローされているユーザーの情報を呼び出す
-  
+
   has_many :followings, through: :active_relationships,  source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
 
@@ -48,6 +48,26 @@ class User < ApplicationRecord
    followings.include?(user)
   end
 
-  # 検索メソッド
+  # 検索メソッド作成
+  # def search_for
+  #   if search == "parfect_match"
+  #     # モデル名.where('カラム名 like ?','検索したい文字列')
+  # end
+
+# 検索方法分岐
+  def self.search_for(search, word)
+    if search == "perfect_match"
+      @user = User.where("name LIKE?", "#{word}")
+    elsif search == "forward_match"
+      @user = User.where("name LIKE?","#{word}%")
+    elsif search == "backward_match"
+      @user = User.where("name LIKE?","%#{word}")
+    elsif search == "partial_match"
+      @user = User.where("name LIKE?","%#{word}%")
+    else
+      @user = User.all
+    end
+  end
+
 
 end
