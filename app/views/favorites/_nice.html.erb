@@ -3,13 +3,14 @@
   <% if book.favorited_by(current_user) %>
     <!--つまりBook.find(params[:book_id])に user.id = current_user.idが存在しているか？-->
     <!--< %= if Book.find(params[:book_id]).favorites.exists?(bookカラム[user_id]: user.id) %>-->
-    <%= link_to book_favorites_path(book), method: :delete do %>
+    <!--非同期化　送信形式をjs形式にするためにremote: trueを指定-->
+    <%= link_to book_favorites_path(book), id:"js-book_favorite_#{book.id}", method: :delete, remote: true do %>
     <!--ハートのfontawesomeを使用-->
       <i class="fas fa-heart" aria-hidden="true" style="color: red;"></i>
       <%= book.favorites.count %>
     <% end %>
   <% else %>
-    <%= link_to book_favorites_path(book), method: :post do %>
+    <%= link_to book_favorites_path(book), method: :post, remote: true do %>
       <i class="fas fa-heart" aria-hidden="true"></i>
       <%= book.favorites.count %>
     <% end %>
