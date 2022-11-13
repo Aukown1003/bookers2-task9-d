@@ -1,5 +1,5 @@
-<!--local: falseで非同期、JS化-->
-<%= form_with(model:[book, book_comment], local: true) do |f| %>
+<!--local: trueを削除してJSで送信-->
+<%= form_with(model:[book, book_comment],local: false) do |f| %>
   <table class = "table table-borderless">
     <tr>
       <td>

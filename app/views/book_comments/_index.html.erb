@@ -9,7 +9,8 @@
 
       <td><%= book_comment.comment %></td>
       <% if book_comment.user.id == current_user.id %>
-        <td><%= link_to 'Destroy', book_book_comment_path(book, book_comment), method: :delete, class: "btn btn-sm btn-danger"%></td>
+        <!--非同期化のためremote: trueを指定-->
+        <td><%= link_to 'Destroy', book_book_comment_path(book, book_comment), method: :delete, remote: true, class: "btn btn-sm btn-danger"%></td>
       <% end %>
     </tr>
   <% end %>
