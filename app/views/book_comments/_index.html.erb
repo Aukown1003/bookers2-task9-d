@@ -1,8 +1,6 @@
 <table class ="table table-borderless m-0">
   <% book.book_comments.each do |book_comment| %>
     <tr>
-        <!--これだとpost指定でコメントが保存できる。但しコメント保存後sizeの部分がgiven2でerrorを起こす-->
-        <!--< %= image_tag book_comment.user.profile_image(50,50)%><br>-->
       <td><%= link_to(book_comment.user) do %>
         <%= image_tag book_comment.user.get_profile_image, size:"100x100" %><br>
         <%= book_comment.user.name %>

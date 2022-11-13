@@ -1,9 +1,7 @@
+<!--local: falseで非同期、JS化-->
 <%= form_with(model:[book, book_comment], local: true) do |f| %>
   <table class = "table table-borderless">
     <tr>
-    <!--メソッド指定なしだとgetになって遅れていなかった。-->
-    <!--が、get_prolire_imageのエラーを修正後postだと送れなくなる。なぜ？？-->
-    <!--< %= form_with model:[@book, @book_comment],method: :post do |f| %>-->
       <td>
         <%= f.text_area :comment, row:'5', class: "form-control w-100%" %><br>
         <%= f.submit "送信" %>
