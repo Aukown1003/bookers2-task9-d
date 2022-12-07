@@ -1,0 +1,18 @@
+<div id="view_raty_<%= book.id%>"></div>
+<script>
+  $(document).on('turbolinks:load', function() {
+     $('#view_raty_<%= book.id%>').empty();
+    let elem = document.querySelector('#view_raty_<%= book.id%>');
+    let opt = {
+      size: 10,
+      starOn: "<%= asset_path('star-on.png') %>",
+      starOff: "<%= asset_path('star-off.png') %>",
+      starHalf: "<%= asset_path('star-half.png') %>",
+      scoreName: 'book[rating]',
+      half: false,
+      readOnly: true,
+      score: <%= book.rating %>,
+    };
+    raty(elem,opt);
+  });
+</script>
