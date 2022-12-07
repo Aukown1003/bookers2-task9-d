@@ -1,5 +1,6 @@
 class FavoritesController < ApplicationController
   def create
+    binding.pry
     # paramsとはRailsで送られてきた値を受け取るためのメソッド、params[:カラム名]で受け取り
     @book = Book.find(params[:book_id])
     favorite = current_user.favorites.new(book_id: @book.id)
