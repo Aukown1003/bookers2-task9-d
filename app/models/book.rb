@@ -12,6 +12,11 @@ class Book < ApplicationRecord
   
   validates :title,presence:true
   validates :body,presence:true,length:{maximum:200}
+  # レビュー用バリデーション
+   validates :rating, numericality: {
+    less_than_or_equal_to: 5,
+    greater_than_or_equal_to: 1
+  }, presence: true
   
    # 検索メソッド作成
   def self.search_for(search, word)
