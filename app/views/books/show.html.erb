@@ -1,4 +1,4 @@
-<div class='container'>
+<div class='container p-0 mx-auto'>
    <%= render 'layouts/errors', obj: @book_comment %>
   <div class='row'>
     <div class='col-md-3'>
@@ -23,7 +23,27 @@
             <%= render 'favorites/nice', book: @book %>
           </td>
           <td>コメント数：<%= @book.book_comments.count %></td>
-          <% if @book.user.id == current_user.id %>
+          
+          <td id="view_raty_<%= @book.id%>" class ="p-0"></td>
+            <script>
+              $(document).on('turbolinks:load', function() {
+                 $('#view_raty_<%= @book.id%>').empty();
+                let elem = document.querySelector('#view_raty_<%= @book.id%>');
+                let opt = {
+                  size: 10,
+                  starOn: "<%= asset_path('star-on.png') %>",
+                  starOff: "<%= asset_path('star-off.png') %>",
+                  starHalf: "<%= asset_path('star-half.png') %>",
+                  scoreName: 'book[rating]',
+                  half: false,
+                  readOnly: true,
+                  score: <%= @book.rating %>,
+                };
+                raty(elem,opt);
+              });
+            </script>
+          
+          <% if @book.user.id != current_user.id %>
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
             <td><%= link_to 'Destroy', book_path, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
           <% end %>

@@ -20,6 +20,7 @@
           <%= render "favorites/nice", book: book %>
         </td>
         <td>コメント数：<%= book.book_comments.count %></td>
+        <td class="view_raty" data-score="<%= book.rating %>"></td>
       </tr>
     <% end %>
   </tbody>
