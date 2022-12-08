@@ -18,9 +18,10 @@ Turbolinks.start()
 ActiveStorage.start()
 
 import Raty from "raty.js"
+// ratyをelemとoptを含む値を初期値として設定する？
+// functionは関数を定義した物
 window.raty = function(elem,opt) {
   let raty =  new Raty(elem,opt)
   raty.init();
   return raty;
 }
-// window.$ = window.jQuery = require('jquery');
