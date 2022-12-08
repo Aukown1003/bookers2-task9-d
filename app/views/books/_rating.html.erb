@@ -1,17 +1,15 @@
-<div id="view_raty_<%= book.id%>"></div>
+<div id="rate_<%= book.id %>"></div>
 <script>
-  $(document).on('turbolinks:load', function() {
-     $('#view_raty_<%= book.id%>').empty();
-    let elem = document.querySelector('#view_raty_<%= book.id%>');
-    let opt = {
-      starOn: "<%= asset_path('star-on.png') %>",
-      starOff: "<%= asset_path('star-off.png') %>",
-      starHalf: "<%= asset_path('star-half.png') %>",
-      scoreName: 'book[rating]',
-      half: false,
-      readOnly: true,
-      score: <%= book.rating %>,
-    };
-    raty(elem,opt);
-  });
+$(document).on('turbolinks:load', function() {
+  $('#rate_<%= book.id %>').empty();
+  let raty_<%= book.id %> = document.querySelector('#rate_<%= book.id %>');
+  let option_<%= book.id %> = {
+    starOn: "<%= asset_path('star-on.png') %>",
+    starOff: "<%= asset_path('star-off.png') %>",
+    starHalf: "<%= asset_path('star-half.png') %>",
+    readOnly: true,
+    score: <%= book.rating %>,
+  };
+  raty(raty_<%= book.id %> ,option_<%= book.id %>);
+});
 </script>
