@@ -3,7 +3,6 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
-    # @user = @book.user ←不要　何故か？showの部分テンプレートで@user = @book.userにして渡せばいい
     @book_comment = BookComment.new
   end
 
