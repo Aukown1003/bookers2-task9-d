@@ -18,6 +18,10 @@ class Book < ApplicationRecord
     greater_than_or_equal_to: 1
   }, presence: true
   
+  scope :sort_rate, ->{order(rating: :desc)}
+  scope :sort_new, ->{order(created_at: :desc)}
+  scope :sort_old, ->{order(created_at: :asc)}
+  
    # 検索メソッド作成
   def self.search_for(search, word)
     if search == "perfect_match"

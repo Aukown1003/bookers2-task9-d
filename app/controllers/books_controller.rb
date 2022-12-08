@@ -8,7 +8,15 @@ class BooksController < ApplicationController
   end
 
   def index
-    @books = Book.all
+    if params[:rate].present?
+      @books = Book.sort_rate
+    elsif params[:new].present?
+      @books = Book.sort_new
+    elsif params[:old].present?
+      @books = Book.sort_old      
+    else
+      @books = Book.all
+    end
     # @bookにインスタンス作成
     @book = Book.new
   end

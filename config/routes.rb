@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     # resourceはそれ自身のidがわからなくても、関連する他のモデルのidから特定できる場合に使用
     # 今回は一人一回であるためuser_idとbook_idから指定できる
     resource :favorites, only: [:create, :destroy]
+
   end
   
   resources :users, only: [:index,:show,:edit,:update] do
