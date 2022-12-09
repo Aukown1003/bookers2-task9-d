@@ -12,7 +12,7 @@
     <%= render 'layouts/header' %>
       <main>
         <p id="notice"><%= notice %></p>
-        <% if ["books","users"].any? { |name| current_page?(send("#{name}_path")) } %>
+        <% if ["users"].any? { |name| current_page?(send("#{name}_path")) } %>
           <div class ="container text-center">
              <%= render 'layouts/search' %>
           </div>

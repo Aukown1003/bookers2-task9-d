@@ -12,7 +12,7 @@ class BooksController < ApplicationController
     elsif params[:new].present?
       @books = Book.sort_new
     elsif params[:old].present?
-      @books = Book.sort_old      
+      @books = Book.sort_old
     else
       @books = Book.all
     end
@@ -58,6 +58,6 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title,:body,:rating)
+    params.require(:book).permit(:title,:body,:rating,:tag)
   end
 end

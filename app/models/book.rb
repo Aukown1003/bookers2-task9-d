@@ -9,9 +9,10 @@ class Book < ApplicationRecord
     # つまりuser.id を参照してあればtrue
     favorites.exists?(user_id: user.id)
   end
-  
+  # presence:true＝nullも空文字もNG
   validates :title,presence:true
   validates :body,presence:true,length:{maximum:200}
+  validates :tag,presence:true
   # レビュー用バリデーション
    validates :rating, numericality: {
     less_than_or_equal_to: 5,

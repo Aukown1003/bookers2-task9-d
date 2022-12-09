@@ -6,7 +6,6 @@ class SearchesController < ApplicationController
     @model = params[:model]
     @word = params[:word]
     @search =params[:search]
-    # pry-rails
     
     if @model == "User"
       @users = User.search_for(@search,@word)
